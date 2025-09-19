@@ -1,7 +1,0 @@
-streamlit
-pandas
-requests
-Pillow
-numpy
-streamlit-option-menu
-scikit-learn
