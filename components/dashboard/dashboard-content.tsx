@@ -3,6 +3,29 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Settings, TrendingUp, Droplets, Leaf } from "lucide-react"
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar } from "recharts"
+
+const soilData = [
+  { value: 3 }, { value: 5 }, { value: 4 }, { value: 6 },
+  { value: 7 }, { value: 8 }, { value: 6 }, { value: 7 }
+]
+
+const healthData = [
+  { value: 4 }, { value: 6 }, { value: 5 }, { value: 7 },
+  { value: 8 }, { value: 9 }, { value: 8 }, { value: 9 }
+]
+
+const harvestData = [
+  { value: 5 }, { value: 7 }, { value: 6 }, { value: 8 },
+  { value: 9 }, { value: 10 }, { value: 9 }, { value: 10 }
+]
+
+const cropData = [
+  { name: "Rice", value: 40, color: "#22c55e" },
+  { name: "Coconut", value: 25, color: "#3b82f6" },
+  { name: "Spices", value: 20, color: "#f97316" },
+  { name: "Rubber", value: 15, color: "#a855f7" },
+]
 
 export function DashboardContent() {
   return (
@@ -24,12 +47,12 @@ export function DashboardContent() {
               <TrendingUp className="h-4 w-4 text-green-500" />
               <span className="text-sm text-muted-foreground">vs. last soil test</span>
             </div>
-            <div className="trend-chart mt-4">
-              <div className="flex items-end justify-center gap-1 h-8">
-                {[3, 5, 4, 6, 7, 8, 6, 7].map((height, i) => (
-                  <div key={i} className="bg-green-500 rounded-sm w-3" style={{ height: `${height * 4}px` }} />
-                ))}
-              </div>
+            <div className="mt-4 h-[50px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={soilData}>
+                  <Bar dataKey="value" fill="#22c55e" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
@@ -45,12 +68,12 @@ export function DashboardContent() {
               <TrendingUp className="h-4 w-4 text-green-500" />
               <span className="text-sm text-muted-foreground">+3% from last month</span>
             </div>
-            <div className="trend-chart mt-4">
-              <div className="flex items-end justify-center gap-1 h-8">
-                {[4, 6, 5, 7, 8, 9, 8, 9].map((height, i) => (
-                  <div key={i} className="bg-blue-500 rounded-sm w-3" style={{ height: `${height * 3.5}px` }} />
-                ))}
-              </div>
+            <div className="mt-4 h-[50px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={healthData}>
+                  <Bar dataKey="value" fill="#3b82f6" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
@@ -66,12 +89,12 @@ export function DashboardContent() {
               <TrendingUp className="h-4 w-4 text-green-500" />
               <span className="text-sm text-muted-foreground">+12% from last season</span>
             </div>
-            <div className="trend-chart mt-4">
-              <div className="flex items-end justify-center gap-1 h-8">
-                {[5, 7, 6, 8, 9, 10, 9, 10].map((height, i) => (
-                  <div key={i} className="bg-green-500 rounded-sm w-3" style={{ height: `${height * 3}px` }} />
-                ))}
-              </div>
+            <div className="mt-4 h-[50px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={harvestData}>
+                  <Bar dataKey="value" fill="#22c55e" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
@@ -145,7 +168,7 @@ export function DashboardContent() {
                   <span className="font-medium">24%</span>
                 </div>
               </div>
-              <Button variant="outline" size="sm" className="w-full mt-4 bg-transparent">
+              <Button variant="outline" size="sm" className="w-full mt-4 text-foreground border-input hover:bg-accent hover:text-accent-foreground">
                 View Details
               </Button>
             </div>
@@ -158,33 +181,38 @@ export function DashboardContent() {
             <CardDescription>Current season crop allocation</CardDescription>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col pb-4">
-            <div className="space-y-3 flex-1">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="text-sm">Rice - 40%</span>
-                </div>
+            <div className="flex flex-col h-full items-center">
+              <div className="w-full h-[200px] flex items-center justify-center py-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={cropData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                    >
+                      {cropData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                  <span className="text-sm">Coconut - 25%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span className="text-sm">Spices - 20%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                  <span className="text-sm">Rubber - 15%</span>
-                </div>
+              <div className="mt-4 space-y-2 w-full">
+                {cropData.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
+                            <span className="text-sm">{item.name}</span>
+                        </div>
+                        <span className="text-sm font-medium">{item.value}%</span>
+                    </div>
+                ))}
               </div>
             </div>
-            <div className="mt-4 h-20 bg-gradient-to-r from-green-500 via-blue-500 via-orange-500 to-purple-500 rounded-lg opacity-20"></div>
           </CardContent>
         </Card>
 
@@ -252,7 +280,7 @@ export function DashboardContent() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Leaf className="h-6 w-6" />
-                <span className="font-semibold">AgroGlobal</span>
+                <span className="font-semibold">FarmersHub</span>
               </div>
               <h3 className="text-lg font-bold">Let's join our community</h3>
               <p className="text-sm opacity-90">Connect with fellow Kerala farmers</p>

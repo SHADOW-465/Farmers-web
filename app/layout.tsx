@@ -8,13 +8,17 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Kerala Farming Assistant - AI-Powered Agricultural Support",
+  title: "FarmersHub - AI-Powered Agricultural Support",
   description:
     "AI-powered farming assistant for Kerala farmers with disease detection, crop recommendations, weather analytics, and community support.",
   generator: "v0.app",
   keywords: "Kerala farming, agriculture, AI, disease detection, crop recommendation, weather, farming assistant",
   authors: [{ name: "Kerala Farming Assistant Team" }],
-  viewport: "width=device-width, initial-scale=1",
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({

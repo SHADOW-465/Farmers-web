@@ -132,7 +132,7 @@
 }
 
 .gauge-chart {
-  @apply relative flex items-center justify-center;
+  @apply relative flex flex-col items-center justify-center;
 }
 
 .trend-chart {

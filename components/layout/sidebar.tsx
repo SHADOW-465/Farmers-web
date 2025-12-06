@@ -52,7 +52,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Leaf className="h-6 w-6 text-sidebar-primary-foreground" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-sidebar-foreground">AgroGlobal</h2>
+              <h2 className="text-lg font-semibold text-sidebar-foreground">FarmersHub</h2>
               <p className="text-xs text-sidebar-foreground/70">NAVIGATION</p>
             </div>
           </div>
@@ -84,11 +84,11 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-sidebar-foreground/5">
             <Avatar className="h-8 w-8">
               <AvatarImage src="/placeholder.svg?height=32&width=32" />
-              <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground text-sm">AW</AvatarFallback>
+              <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground text-sm">FN</AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-sidebar-foreground truncate">Alex Williamson</p>
-              <p className="text-xs text-sidebar-foreground/70 truncate">Radio-1974</p>
+              <p className="text-sm font-medium text-sidebar-foreground truncate">Farmer Name</p>
+              <p className="text-xs text-sidebar-foreground/70 truncate">farmer@example.com</p>
             </div>
           </div>
         </div>
