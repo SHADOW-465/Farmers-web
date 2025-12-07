@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, Search, User } from "lucide-react"
+import { Bell, Search, User, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -35,6 +35,21 @@ export function Header() {
             <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">3</Badge>
             <span className="sr-only">Notifications</span>
           </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Globe className="h-5 w-5" />
+                <span className="sr-only">Switch Language</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>English</DropdownMenuItem>
+              <DropdownMenuItem>Malayalam (മലയാളം)</DropdownMenuItem>
+              <DropdownMenuItem>Hindi (हिंदी)</DropdownMenuItem>
+              <DropdownMenuItem>Tamil (தமிழ்)</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <ThemeToggle />
 
