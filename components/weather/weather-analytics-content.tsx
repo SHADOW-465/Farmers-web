@@ -8,7 +8,10 @@ import { WeatherForecast } from "./weather-forecast"
 import { FarmingAlerts } from "./farming-alerts"
 import { IrrigationRecommendations } from "./irrigation-recommendations"
 import { WeatherHistory } from "./weather-history"
-import { CloudRain, Calendar, Droplets, AlertTriangle, BarChart3 } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { CloudRain, Calendar, Droplets, AlertTriangle, BarChart3, Search } from "lucide-react"
+import { getWeather } from "@/app/actions"
 
 export interface WeatherData {
   current: {
@@ -47,8 +50,9 @@ export interface WeatherData {
 }
 
 export function WeatherAnalyticsContent() {
+  const [location, setLocation] = useState("Kochi, Kerala")
   // Mock weather data for Kerala
-  const [weatherData] = useState<WeatherData>({
+  const [weatherData, setWeatherData] = useState<WeatherData>({
     current: {
       temperature: 28,
       humidity: 78,
@@ -185,6 +189,26 @@ export function WeatherAnalyticsContent() {
         <p className="text-muted-foreground text-pretty">
           Real-time weather data, forecasts, and farming-specific recommendations for Kerala.
         </p>
+      </div>
+
+      <div className="flex gap-2 w-full max-w-sm">
+          <Input
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Enter City/Village"
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                const data = await getWeather(location)
+                setWeatherData(JSON.parse(data))
+              }
+            }}
+          />
+          <Button onClick={async () => {
+             const data = await getWeather(location)
+             setWeatherData(JSON.parse(data))
+          }}>
+            <Search className="h-4 w-4" />
+          </Button>
       </div>
 
       {/* Current Weather Overview */}

@@ -5,6 +5,8 @@ import { CropTracking } from "./crop-tracking"
 import { ExpenseTracking } from "./expense-tracking"
 import { HarvestRecords } from "./harvest-records"
 import { InventoryManagement } from "./inventory-management"
+import { MarketPrices } from "./market-prices"
+import { GovernmentSchemes } from "./government-schemes"
 
 export function FarmManagementContent() {
   return (
@@ -15,12 +17,14 @@ export function FarmManagementContent() {
       </div>
 
       <Tabs defaultValue="profile" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="profile">Farm Profile</TabsTrigger>
-          <TabsTrigger value="crops">Crop Tracking</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 overflow-x-auto">
+          <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsTrigger value="crops">Crops</TabsTrigger>
           <TabsTrigger value="expenses">Expenses</TabsTrigger>
           <TabsTrigger value="harvest">Harvest</TabsTrigger>
           <TabsTrigger value="inventory">Inventory</TabsTrigger>
+          <TabsTrigger value="market">Market Prices</TabsTrigger>
+          <TabsTrigger value="schemes">Schemes</TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-4">
@@ -41,6 +45,14 @@ export function FarmManagementContent() {
 
         <TabsContent value="inventory" className="space-y-4">
           <InventoryManagement />
+        </TabsContent>
+
+        <TabsContent value="market" className="space-y-4">
+          <MarketPrices />
+        </TabsContent>
+
+        <TabsContent value="schemes" className="space-y-4">
+            <GovernmentSchemes />
         </TabsContent>
       </Tabs>
     </div>

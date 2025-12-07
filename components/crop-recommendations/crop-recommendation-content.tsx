@@ -8,6 +8,8 @@ import { RecommendationResults } from "./recommendation-results"
 import { SeasonalCalendar } from "./seasonal-calendar"
 import { MarketInsights } from "./market-insights"
 import { Sprout, Calendar, TrendingUp, TestTube } from "lucide-react"
+import { getCropRecommendations } from "@/app/actions"
+import { toast } from "sonner"
 
 export interface SoilData {
   ph: number
@@ -49,120 +51,21 @@ export function CropRecommendationContent() {
     setIsAnalyzing(true)
     setSoilData(data)
 
-    // Simulate AI analysis
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await getCropRecommendations(data)
+      if (response === "Error") {
+        toast.error("Failed to generate recommendations")
+        return
+      }
 
-    // Generate mock recommendations based on Kerala crops
-    const mockRecommendations: CropRecommendation[] = [
-      {
-        id: "1",
-        name: "Black Pepper",
-        suitabilityScore: 92,
-        expectedYield: "2-3 kg per vine",
-        marketPrice: 450,
-        profitability: "high",
-        growthPeriod: "3-4 years to maturity",
-        waterRequirement: "medium",
-        soilSuitability: 95,
-        marketDemand: 88,
-        riskLevel: "low",
-        advantages: [
-          "High market value and demand",
-          "Suitable for Kerala's climate",
-          "Long-term profitable crop",
-          "Can be intercropped with coconut",
-        ],
-        considerations: ["Requires initial investment", "Takes time to mature", "Needs proper support structures"],
-        bestPlantingTime: "May-June (Pre-monsoon)",
-        harvestTime: "December-February",
-      },
-      {
-        id: "2",
-        name: "Cardamom",
-        suitabilityScore: 88,
-        expectedYield: "50-100 kg per hectare",
-        marketPrice: 1200,
-        profitability: "high",
-        growthPeriod: "2-3 years",
-        waterRequirement: "high",
-        soilSuitability: 85,
-        marketDemand: 92,
-        riskLevel: "medium",
-        advantages: [
-          "Premium spice with high value",
-          "Thrives in Kerala's hill regions",
-          "Strong export market",
-          "Shade-tolerant crop",
-        ],
-        considerations: ["Requires specific altitude", "Susceptible to diseases", "Needs consistent moisture"],
-        bestPlantingTime: "April-May",
-        harvestTime: "October-December",
-      },
-      {
-        id: "3",
-        name: "Coconut",
-        suitabilityScore: 85,
-        expectedYield: "80-120 nuts per palm per year",
-        marketPrice: 25,
-        profitability: "medium",
-        growthPeriod: "5-6 years to bearing",
-        waterRequirement: "medium",
-        soilSuitability: 90,
-        marketDemand: 75,
-        riskLevel: "low",
-        advantages: [
-          "Multiple products (water, oil, fiber)",
-          "Long productive life (60+ years)",
-          "Suitable for coastal areas",
-          "Steady income source",
-        ],
-        considerations: ["Long gestation period", "Requires large space", "Vulnerable to cyclones"],
-        bestPlantingTime: "May-June or September-October",
-        harvestTime: "Year-round (monthly harvest)",
-      },
-      {
-        id: "4",
-        name: "Rice (Paddy)",
-        suitabilityScore: 82,
-        expectedYield: "4-6 tons per hectare",
-        marketPrice: 20,
-        profitability: "medium",
-        growthPeriod: "3-4 months",
-        waterRequirement: "high",
-        soilSuitability: 88,
-        marketDemand: 85,
-        riskLevel: "medium",
-        advantages: [
-          "Staple food crop",
-          "Suitable for wetlands",
-          "Multiple varieties available",
-          "Government support available",
-        ],
-        considerations: ["Water-intensive crop", "Pest and disease pressure", "Market price fluctuations"],
-        bestPlantingTime: "May-June (Kharif) or November-December (Rabi)",
-        harvestTime: "September-October or March-April",
-      },
-      {
-        id: "5",
-        name: "Banana",
-        suitabilityScore: 78,
-        expectedYield: "40-60 tons per hectare",
-        marketPrice: 15,
-        profitability: "medium",
-        growthPeriod: "12-15 months",
-        waterRequirement: "high",
-        soilSuitability: 80,
-        marketDemand: 82,
-        riskLevel: "medium",
-        advantages: ["Quick returns", "High productivity", "Multiple varieties", "Good local market"],
-        considerations: ["Susceptible to wind damage", "Requires regular irrigation", "Post-harvest handling critical"],
-        bestPlantingTime: "February-March or September-October",
-        harvestTime: "Year-round depending on variety",
-      },
-    ]
-
-    setRecommendations(mockRecommendations)
-    setIsAnalyzing(false)
+      const parsedRecommendations: CropRecommendation[] = JSON.parse(response)
+      setRecommendations(parsedRecommendations)
+    } catch (error) {
+      console.error("Recommendation Error:", error)
+      toast.error("An error occurred while analyzing data")
+    } finally {
+      setIsAnalyzing(false)
+    }
   }
 
   return (
